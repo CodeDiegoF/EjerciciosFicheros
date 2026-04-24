@@ -1,0 +1,2 @@
+Texto a escribir en fichero y una ñ
+nueva línea

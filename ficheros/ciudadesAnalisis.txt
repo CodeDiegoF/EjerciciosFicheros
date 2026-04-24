@@ -1,0 +1,6 @@
+Nº de ciudades del norte: 752
+Nº de ciudades del sur: 221
+Nº de ciudades del este: 781
+Nº de ciudades del oeste: 192
+Nº de ciudades de españa: 4
+Nº de ciudades de china: 180
