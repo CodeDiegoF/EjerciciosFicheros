@@ -10,6 +10,7 @@ import java.util.List;
 
 public class MainCiudades {
 
+     // Convierte una linea CSV en una Ciudad: ciudad,pais,longitud,latitud.
      private static Ciudad parseCiudad(String linea) {
           String[] tokens = linea.split(",", 4);
           if (tokens.length != 4) {
@@ -24,6 +25,7 @@ public class MainCiudades {
           return new Ciudad(nombreCiudad, nombrePais, latitud, longitud);
      }
 
+     // Calcula estadisticas con streams y devuelve el texto listo para imprimir/escribir.
      public static String ObtenerDatos(HashSet<Ciudad> ciudades) throws IOException {
           
           long norte = ciudades.stream().filter(c -> c.getLatitud() > 0).count();
@@ -43,12 +45,15 @@ public class MainCiudades {
      }
 
      public static void main(String[] args) throws IOException {
+          // Conjunto para evitar ciudades repetidas segun equals/hashCode de Ciudad.
           HashSet<Ciudad> ciudades = new HashSet<>();
           Path inPath = Paths.get("ficheros/ciudades.csv");
           Path outPath = Paths.get("ficheros/ciudadesAnalisis.txt");
 
+          // Lectura completa del CSV en memoria.
           List<String> lineas = Files.readAllLines(inPath);
 
+          // Se ignora la cabecera (indice 0) y se parsea cada linea de datos.
           for (int i = 1; i < lineas.size(); i++) {
                
                String linea = lineas.get(i);
@@ -61,12 +66,14 @@ public class MainCiudades {
 
           System.out.println("Leídas " + ciudades.size() + " ciudades");
           try{
+               // Guarda el analisis en fichero de salida.
                Files.writeString(outPath,ObtenerDatos(ciudades));
-               System.out.printf("Escritos %d en el fichero %s%n", Files.size(outPath), outPath);
+               System.out.printf("Escritos %d bytes en el fichero %s%n", Files.size(outPath), outPath);
           }catch (IOException e) {
                System.out.println("Error al escribir el fichero: " + e.getMessage());
           }
 
+          // Llamada final para obtener el analisis (si se quiere mostrar, imprimir su retorno).
           ObtenerDatos(ciudades);
 
      }

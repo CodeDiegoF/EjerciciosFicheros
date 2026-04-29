@@ -6,10 +6,12 @@ import java.util.stream.Stream;
 
 public class EjemploBasico4 {
      public static void main(String[] args) throws IOException {
+          // Fichero con un numero por linea.
           Path inPath = Paths.get("ficheros/numbers.txt");
           
           double media = 0.0;
           try (Stream<String> stream = Files.lines(inPath)) {
+                // Convierte cada linea a double y calcula la media.
                 media = stream.mapToDouble(Double::parseDouble)
                        .average()
                        .orElse(0.0);
@@ -21,6 +23,7 @@ public class EjemploBasico4 {
           }
           
           try (Stream<String> stream = Files.lines(inPath)) {
+               // Segunda lectura para calcular suma (el stream anterior ya se consumio).
                double suma =
                        stream.mapToDouble(Double::parseDouble)
                        .sum();
@@ -29,6 +32,7 @@ public class EjemploBasico4 {
           }
           
           try (Stream<String> stream = Files.lines(inPath)) {
+               // Tercera lectura para contar cuantos valores quedan por debajo de la media.
                double finalMedia = media;
                int valoresMenoresMedia =
                        (int) stream.mapToDouble(Double::parseDouble)
